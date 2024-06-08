@@ -1,0 +1,36 @@
+server:
+  port: 8081
+flyway:
+  password: "root"
+  schemas: product_db
+  url: "jdbc:mysql://localhost:3306/"
+  user: "root"
+spring:
+  application:
+    name: "users"
+  config:
+    import: "optional:configserver:http://localhost:8888/"
+  datasource:
+    password: "root"
+    url: "jdbc:mysql://localhost:3306/product_db"
+    username: "root"
+
+  security:
+    oauth2.resourceserver.jwt.issuer-uri: "http://localhost:9000"
+
+eureka:
+  instance:
+    preferIpAddress: true     # by default will use hostname, but we don't have DNS mapping so use Ip address
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8899/eureka/
+
+info:
+  app:
+    name: "accounts"
+    description: "Accounts application"
+    version: "1.0.0"
+
+
