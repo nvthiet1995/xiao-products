@@ -24,7 +24,7 @@ public class ProductDto {
     private String description;
 
     @NotEmpty
-    private String leftInStock;
+    private Integer leftInStock;
 
-    private Set<ProductDetailsDto> productDetails = new HashSet<>();
+    private Set<ProductDetailDto> productDetails = new HashSet<>();
 }

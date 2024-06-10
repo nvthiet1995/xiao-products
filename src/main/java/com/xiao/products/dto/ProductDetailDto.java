@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDetailsDto {
+public class ProductDetailDto {
     @NotEmpty
     @Size(min = 2, max = 255)
     private String name;

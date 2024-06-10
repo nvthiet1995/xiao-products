@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 
 public interface IProductService {
 
-    ProductDto createProduct(ProductDto product);
+    void createProduct(ProductDto product);
 
     ProductDto findProductById(Long id);
 
