@@ -10,6 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDetailDto {
+    private Long id;
+
     @NotEmpty
     @Size(min = 2, max = 255)
     private String name;

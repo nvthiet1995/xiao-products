@@ -1,5 +1,6 @@
 package com.xiao.products.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -23,7 +24,7 @@ public class ProductDto {
     @Size(min = 2, max = 10000)
     private String description;
 
-    @NotEmpty
+    @Min(1)
     private Integer leftInStock;
 
     private Set<ProductDetailDto> productDetails = new HashSet<>();

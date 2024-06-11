@@ -20,4 +20,8 @@ public class ProductDetail extends BaseEntity{
 
     @Column(name = "value", nullable = false ,length = 500)
     private String value;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 }

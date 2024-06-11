@@ -27,7 +27,6 @@ public class Product extends BaseEntity{
     @Column(name = "left_in_stock", nullable = false, length = 10)
     private Integer leftInStock;
 
-    @OneToMany
-    @JoinColumn(name = "product_details")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductDetail> productDetails = new HashSet<>();
 }
