@@ -1,5 +1,6 @@
 package com.xiao.products.dto;
 
+import com.xiao.products.entity.Product;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -19,4 +20,6 @@ public class ProductDetailDto {
     @NotEmpty
     @Size(min = 2, max = 500)
     private String value;
+
+    private ProductDto product;
 }

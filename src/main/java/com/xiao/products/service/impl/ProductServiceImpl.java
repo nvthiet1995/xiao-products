@@ -1,7 +1,9 @@
 package com.xiao.products.service.impl;
 
+import com.xiao.products.dto.ProductDetailDto;
 import com.xiao.products.dto.ProductDto;
 import com.xiao.products.entity.Product;
+import com.xiao.products.entity.ProductDetail;
 import com.xiao.products.exception.ResourceNotFoundException;
 import com.xiao.products.mapper.ProductDetailMapper;
 import com.xiao.products.mapper.ProductMapper;
@@ -28,7 +30,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public void createProduct(ProductDto productDto) {
-        productRepository.save(productMapper.productDtoToProduct(productDto));
+        Product product = productMapper.productDtoToProduct(productDto);
+//        product.getProductDetails().forEach(productDetail -> productDetail.setProduct(product));
+        productRepository.save(product);
     }
 
     @Override
