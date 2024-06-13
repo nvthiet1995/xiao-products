@@ -37,4 +37,19 @@ public class ProductController {
                 .status(200)
                 .body(productDtosPage);
     }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long id){
+        ProductDto productDto = iProductService.findProductById(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(productDto);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteProduct(Long id){
+        iProductService.deleteProduct(id);
+        return ResponseEntity
+                .ok().build();
+    }
 }

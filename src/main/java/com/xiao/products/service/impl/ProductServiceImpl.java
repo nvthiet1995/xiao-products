@@ -31,7 +31,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void createProduct(ProductDto productDto) {
         Product product = productMapper.productDtoToProduct(productDto);
-//        product.getProductDetails().forEach(productDetail -> productDetail.setProduct(product));
+        product.getProductDetails().forEach(productDetail -> productDetail.setProduct(product));
         productRepository.save(product);
     }
 
@@ -61,7 +61,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public void deleteProduct(Long id) {
-
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product", "id", String.valueOf(id)));
+        productRepository.delete(product);
     }
 
     private Product mapValueFieldUpdate(Product existingProduct, ProductDto productDto) {
