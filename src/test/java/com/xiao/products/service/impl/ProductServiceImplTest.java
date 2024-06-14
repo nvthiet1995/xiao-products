@@ -5,6 +5,7 @@ import com.xiao.products.entity.Product;
 import com.xiao.products.entity.ProductDetail;
 import com.xiao.products.mapper.ProductDetailMapper;
 import com.xiao.products.mapper.ProductMapper;
+import com.xiao.products.repository.ProductDetailRepository;
 import com.xiao.products.repository.ProductRepository;
 import com.xiao.products.util.ProductDetailsUtil;
 import com.xiao.products.util.ProductUtil;
@@ -26,6 +27,9 @@ public class ProductServiceImplTest {
     @Mock
     private ProductRepository productRepository;
 
+    @Mock
+    private ProductDetailRepository productDetailRepository;
+
     private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
     private final ProductDetailMapper productDetailMapper = Mappers.getMapper(ProductDetailMapper.class);
@@ -35,7 +39,7 @@ public class ProductServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        productService = new ProductServiceImpl(productRepository, productMapper, productDetailMapper);
+        productService = new ProductServiceImpl(productRepository, productMapper, productDetailMapper, productDetailRepository);
     }
 
     @Test

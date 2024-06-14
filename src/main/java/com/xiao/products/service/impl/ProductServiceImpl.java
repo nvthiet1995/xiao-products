@@ -1,12 +1,11 @@
 package com.xiao.products.service.impl;
 
-import com.xiao.products.dto.ProductDetailDto;
 import com.xiao.products.dto.ProductDto;
 import com.xiao.products.entity.Product;
-import com.xiao.products.entity.ProductDetail;
 import com.xiao.products.exception.ResourceNotFoundException;
 import com.xiao.products.mapper.ProductDetailMapper;
 import com.xiao.products.mapper.ProductMapper;
+import com.xiao.products.repository.ProductDetailRepository;
 import com.xiao.products.repository.ProductRepository;
 import com.xiao.products.service.IProductService;
 import org.springframework.data.domain.Page;
@@ -21,17 +20,19 @@ public class ProductServiceImpl implements IProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductDetailMapper productDetailMapper;
+    private final ProductDetailRepository productDetailRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, ProductDetailMapper productDetailMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, ProductDetailMapper productDetailMapper, ProductDetailRepository productDetailRepository) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.productDetailMapper = productDetailMapper;
+        this.productDetailRepository = productDetailRepository;
     }
 
     @Override
     public void createProduct(ProductDto productDto) {
         Product product = productMapper.productDtoToProduct(productDto);
-        product.getProductDetails().forEach(productDetail -> productDetail.setProduct(product));
+        mappingProductIntoProductDetails(product);
         productRepository.save(product);
     }
 
@@ -56,6 +57,10 @@ public class ProductServiceImpl implements IProductService {
         );
 
         existingProduct = mapValueFieldUpdate(existingProduct, productDto);
+        mappingProductIntoProductDetails(existingProduct);
+
+        if(isUpdateProductDetail(existingProduct)) deleteProductDetailsByProductId(existingProduct.getId());
+
         return productMapper.productToProductDto(productRepository.save(existingProduct));
     }
 
@@ -73,5 +78,19 @@ public class ProductServiceImpl implements IProductService {
                 .leftInStock(Objects.isNull(productDto.getLeftInStock()) ? existingProduct.getLeftInStock() : productDto.getLeftInStock())
                 .productDetails(productDetailMapper.productDetailsDtoToProductDetails(productDto.getProductDetails()))
                 .build();
+    }
+
+    private void mappingProductIntoProductDetails(Product product){
+        product.getProductDetails().forEach(productDetail -> {
+            productDetail.setProduct(product);
+        });
+    }
+
+    private void deleteProductDetailsByProductId(Long productId){
+        productDetailRepository.deleteByProductId(productId);
+    }
+
+    private boolean isUpdateProductDetail(Product product){
+        return !product.getProductDetails().isEmpty();
     }
 }

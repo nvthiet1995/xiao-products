@@ -52,4 +52,12 @@ public class ProductController {
         return ResponseEntity
                 .ok().build();
     }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto){
+        ProductDto productDtoResponse = iProductService.updateProduct(id, productDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(productDtoResponse);
+    }
 }
