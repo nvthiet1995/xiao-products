@@ -1,10 +1,12 @@
 package com.xiao.products.entity;
 
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "products")
@@ -13,6 +15,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Product extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,7 @@ public class Product extends BaseEntity{
     @Column(name = "left_in_stock", nullable = false, length = 10)
     private Integer leftInStock;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<ProductDetail> productDetails = new HashSet<>();
+    @Type(JsonType.class)
+    @Column(columnDefinition = "json")
+    private Map<String, String> specifications = new HashMap<>();
 }

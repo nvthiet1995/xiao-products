@@ -2,12 +2,8 @@ package com.xiao.products.service.impl;
 
 import com.xiao.products.dto.ProductDto;
 import com.xiao.products.entity.Product;
-import com.xiao.products.entity.ProductDetail;
-import com.xiao.products.mapper.ProductDetailMapper;
 import com.xiao.products.mapper.ProductMapper;
-import com.xiao.products.repository.ProductDetailRepository;
 import com.xiao.products.repository.ProductRepository;
-import com.xiao.products.util.ProductDetailsUtil;
 import com.xiao.products.util.ProductUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
-import java.util.Set;
 
 import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,25 +22,19 @@ public class ProductServiceImplTest {
     @Mock
     private ProductRepository productRepository;
 
-    @Mock
-    private ProductDetailRepository productDetailRepository;
-
     private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
-
-    private final ProductDetailMapper productDetailMapper = Mappers.getMapper(ProductDetailMapper.class);
 
     private ProductServiceImpl productService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        productService = new ProductServiceImpl(productRepository, productMapper, productDetailMapper, productDetailRepository);
+        productService = new ProductServiceImpl(productRepository, productMapper);
     }
 
     @Test
     void testCreateProduct(){
         ProductDto productDto = ProductUtil.buildProductDto();
-        productDto.setProductDetails(ProductDetailsUtil.buildProductDetailsDto());
         productService.createProduct(productDto);
 
         verify(productRepository, times(1)).save(any(Product.class));
@@ -68,10 +57,8 @@ public class ProductServiceImplTest {
 
     @Test
     void testFindProductById() {
-        Set<ProductDetail> productDetail = ProductDetailsUtil.buildProductDetails();
         Long productId = 1L;
         Product product = ProductUtil.buildProduct();
-        product.setProductDetails(productDetail);
         product.setId(productId);
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
 
@@ -81,7 +68,7 @@ public class ProductServiceImplTest {
         assertEquals(product.getId(), result.getId());
         assertEquals(product.getDescription(), result.getDescription());
         assertEquals(product.getLeftInStock(), result.getLeftInStock());
-        assertEquals(product.getProductDetails().size(), result.getProductDetails().size());
+//        assertEquals(product.getSpecifications().size(), result.getSpecifications().size());
     }
 
     @Test

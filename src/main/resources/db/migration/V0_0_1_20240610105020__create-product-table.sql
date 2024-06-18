@@ -3,6 +3,7 @@ CREATE TABLE `product_db`.`products` (
   `name` TINYTEXT NOT NULL,
   `description` LONGTEXT NOT NULL,
   `left_in_stock` INT NOT NULL,
+  `specifications` TEXT NULL,
   `created_at` DATETIME NOT NULL,
   `created_by` VARCHAR(50) NOT NULL,
   `updated_at` DATETIME NULL,
