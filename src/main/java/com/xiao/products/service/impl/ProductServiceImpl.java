@@ -27,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createProduct(ProductDto productDto) {
         Product product = productMapper.productDtoToProduct(productDto);
+        mappingProductIntoProductImages(product);
         productRepository.save(product);
     }
 
@@ -73,4 +74,9 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    private void mappingProductIntoProductImages(Product product){
+        product.getProductImages().forEach(productImage -> {
+            productImage.setProduct(product);
+        });
+    }
 }

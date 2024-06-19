@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.Map;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,4 +28,6 @@ public class ProductDto {
     private Integer leftInStock;
 
     private Map<String, String> specifications;
+
+    private Set<ProductImageDto> productImages;
 }

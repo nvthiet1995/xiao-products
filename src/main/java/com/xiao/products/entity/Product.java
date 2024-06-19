@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -33,4 +34,8 @@ public class Product extends BaseEntity{
     @Type(JsonType.class)
     @Column(columnDefinition = "json")
     private Map<String, String> specifications = new HashMap<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<ProductImage> productImages;
+
 }
