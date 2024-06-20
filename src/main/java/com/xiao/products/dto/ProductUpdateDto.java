@@ -4,6 +4,7 @@ import com.xiao.products.validator.CheckAllValueEmpty;
 import lombok.*;
 
 import java.util.Map;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,4 +22,6 @@ public class ProductUpdateDto {
     private Integer leftInStock;
 
     private Map<String, String> specifications;
+
+    private Set<ProductImageDto> productImages;
 }

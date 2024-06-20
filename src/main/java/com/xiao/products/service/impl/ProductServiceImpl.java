@@ -27,7 +27,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createProduct(ProductDto productDto) {
         Product product = productMapper.productDtoToProduct(productDto);
-        mappingProductIntoProductImages(product);
+        if(product.getProductImages() != null && !product.getProductImages().isEmpty()) {
+            mappingProductIntoProductImages(product);
+        }
         productRepository.save(product);
     }
 

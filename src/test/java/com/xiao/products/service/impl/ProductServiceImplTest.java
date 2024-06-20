@@ -68,7 +68,8 @@ public class ProductServiceImplTest {
         assertEquals(product.getId(), result.getId());
         assertEquals(product.getDescription(), result.getDescription());
         assertEquals(product.getLeftInStock(), result.getLeftInStock());
-//        assertEquals(product.getSpecifications().size(), result.getSpecifications().size());
+        assertEquals(product.getSpecifications().get("Xuat xu"), result.getSpecifications().get("Xuat xu"));
+        assertEquals(product.getSpecifications().get("Chat lieu"), result.getSpecifications().get("Chat lieu"));
     }
 
     @Test
