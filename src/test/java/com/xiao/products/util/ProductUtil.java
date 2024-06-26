@@ -33,4 +33,17 @@ public class ProductUtil {
                 ))
                 .build();
     }
+
+    public static ProductDto buildProductUpdateDto(){
+        return ProductDto.builder()
+                .id(1L)
+                .name("Iphone 14 pro maxxxx")
+                .leftInStock(15)
+                .description("Phone is supper vip pro")
+                .specifications(Map.of(
+                        "Xuat xu", "West Domain",
+                        "Chat lieu", "iron pvc"
+                ))
+                .build();
+    }
 }

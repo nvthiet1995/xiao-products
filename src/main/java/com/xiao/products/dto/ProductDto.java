@@ -16,11 +16,11 @@ import java.util.Set;
 public class ProductDto {
     private Long id;
 
-    @NotEmpty
-    @Size(min = 2, max = 500, message = "Description must have at least 2 characters and be less than 500 characters.")
+    @NotEmpty(message = "Name can't be empty")
+    @Size(min = 2, max = 500, message = "Name must have at least 2 characters and be less than 500 characters.")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "Description can't be empty")
     @Size(min = 2, max = 10000, message = "Description must have at least 2 characters and be less than 10,000 characters.")
     private String description;
 
