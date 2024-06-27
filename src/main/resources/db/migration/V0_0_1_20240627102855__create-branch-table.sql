@@ -1,10 +1,9 @@
-CREATE TABLE `product_db`.`products` (
+CREATE TABLE `product_db`.`branch` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` TINYTEXT NOT NULL,
-  `description` LONGTEXT NOT NULL,
-  `left_in_stock` INT NOT NULL,
-  `specifications` TEXT NULL,
-  `branch_id` INT NULL,
+  `name` VARCHAR(255) NULL,
+  `logo` TINYTEXT NOT NULL,
+  `description` TEXT,
+  `country` VARCHAR(100),
   `created_at` DATETIME NOT NULL,
   `created_by` VARCHAR(50) NOT NULL,
   `updated_at` DATETIME NULL,

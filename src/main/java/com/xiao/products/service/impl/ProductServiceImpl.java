@@ -65,15 +65,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Product mapValueFieldUpdate(Product existingProduct, ProductUpdateDto productDto) {
-        Product product = Product.builder()
+
+        return Product.builder()
                 .id(existingProduct.getId())
                 .name(Objects.isNull(productDto.getName()) || productDto.getName().isEmpty() ? existingProduct.getName() : productDto.getName())
                 .description(Objects.isNull(productDto.getDescription()) || productDto.getDescription().isEmpty() ? existingProduct.getDescription() : productDto.getDescription())
                 .leftInStock(Objects.isNull(productDto.getLeftInStock()) ? existingProduct.getLeftInStock() : productDto.getLeftInStock())
                 .specifications(productDto.getSpecifications().isEmpty() ? existingProduct.getSpecifications() : productDto.getSpecifications())
                 .build();
-
-        return product;
     }
 
     private void mappingProductIntoProductImages(Product product){

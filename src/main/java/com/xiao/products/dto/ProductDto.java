@@ -30,4 +30,6 @@ public class ProductDto {
     private Map<String, String> specifications;
 
     private Set<ProductImageDto> productImages;
+
+    private BranchDto branch;
 }
