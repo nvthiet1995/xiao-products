@@ -11,7 +11,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@CheckAllValueEmpty(fields = {"name", "description", "leftInStock", "specifications"}, message = "Please enter at least one piece when updating the product")
+@CheckAllValueEmpty(fields = {"name", "description", "leftInStock", "specifications", "productImages"}, message = "Please enter at least one piece when updating the product")
 public class ProductUpdateDto {
     private Long id;
 
