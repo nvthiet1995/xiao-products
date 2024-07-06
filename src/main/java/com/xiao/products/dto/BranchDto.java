@@ -2,11 +2,11 @@ package com.xiao.products.dto;
 
 import com.xiao.products.entity.Product;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BranchDto {

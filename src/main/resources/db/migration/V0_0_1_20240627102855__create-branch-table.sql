@@ -1,4 +1,4 @@
-CREATE TABLE `product_db`.`branch` (
+CREATE TABLE `product_db`.`branches` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL,
   `logo` TINYTEXT NOT NULL,

@@ -5,7 +5,9 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductImageDto {

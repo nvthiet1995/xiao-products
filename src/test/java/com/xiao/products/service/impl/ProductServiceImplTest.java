@@ -1,9 +1,13 @@
 package com.xiao.products.service.impl;
 
 import com.xiao.products.dto.ProductDto;
+import com.xiao.products.entity.Branch;
 import com.xiao.products.entity.Product;
+import com.xiao.products.mapper.BranchMapper;
 import com.xiao.products.mapper.ProductMapper;
+import com.xiao.products.repository.BranchRepository;
 import com.xiao.products.repository.ProductRepository;
+import com.xiao.products.util.BranchUtil;
 import com.xiao.products.util.ProductUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +30,11 @@ public class ProductServiceImplTest {
 
     private ProductServiceImpl productService;
 
+    @Mock
+    private BranchRepository branchRepository;
+
+    private final BranchMapper branchMapper = Mappers.getMapper(BranchMapper.class);
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -35,6 +44,17 @@ public class ProductServiceImplTest {
     @Test
     void testCreateProduct(){
         ProductDto productDto = ProductUtil.buildProductDto();
+        productService.createProduct(productDto);
+
+        verify(productRepository, times(1)).save(any(Product.class));
+    }
+
+    @Test
+    void testCreateProductWithBranch(){
+        Branch branch = branchRepository.save(BranchUtil.buildBranch());
+
+        ProductDto productDto = ProductUtil.buildProductDto();
+        productDto.setBranch(branchMapper.branchToBranchDto(branch));
         productService.createProduct(productDto);
 
         verify(productRepository, times(1)).save(any(Product.class));

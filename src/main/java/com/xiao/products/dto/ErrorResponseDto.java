@@ -1,12 +1,13 @@
 package com.xiao.products.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 public class ErrorResponseDto {
 

@@ -1,9 +1,10 @@
 package com.xiao.products.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 public class ResponseDto {
 
