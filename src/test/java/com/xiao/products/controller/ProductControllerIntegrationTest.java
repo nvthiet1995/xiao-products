@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProductControllerIntegrationTest {
+class ProductControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -53,7 +53,7 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
-    void testCreateAccount_400() throws Exception {
+    void testCreateProduct_400() throws Exception {
         ProductDto productDto = ProductUtil.buildProductDto();
         productDto.setName(null);
 
@@ -68,7 +68,7 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
-    void testCreateAccount_415() throws Exception {
+    void testCreateProduct_415() throws Exception {
         ProductDto productDto = ProductUtil.buildProductDto();
 
         mockMvc.perform(MockMvcRequestBuilders.post("/products")
@@ -79,19 +79,19 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
-    void testFindUserById_200() throws Exception {
-        ProductDto userDto = ProductUtil.buildProductDto();
+    void testFindProductById_200() throws Exception {
+        ProductDto productDto = ProductUtil.buildProductDto();
 
-        Product user = productRepository.save(productMapper.productDtoToProduct(userDto));
+        Product product = productRepository.save(productMapper.productDtoToProduct(productDto));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/products/{id}", user.getId())
+        mockMvc.perform(MockMvcRequestBuilders.get("/products/{id}", product.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(user.getId()));
+                .andExpect(jsonPath("$.id").value(product.getId()));
     }
 
     @Test
-    void testFindUserById_404() throws Exception {
+    void testFindProductById_404() throws Exception {
         Long productId = 999L;
 
         mockMvc.perform(MockMvcRequestBuilders.get("/products/{id}", productId)
@@ -103,7 +103,7 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
-    void testFindAllUser_200() throws Exception {
+    void testFindAllProduct_200() throws Exception {
         ProductDto productDto = ProductUtil.buildProductDto();
         ProductDto productDto1 = ProductUtil.buildProductDto();
 
@@ -127,7 +127,7 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
-    void testFindAllUser_200_withPageSizeIs1() throws Exception {
+    void testFindAllProduct_200_withPageSizeIs1() throws Exception {
 
         Product productPage1 = productRepository.save(ProductUtil.buildProduct());
         Product productPage2 = productRepository.save(ProductUtil.buildProduct());
@@ -156,7 +156,7 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
-    void testFindAllUser_whenMissingParams() throws Exception {
+    void testFindAllProduct_whenMissingParams() throws Exception {
         ProductDto userDto1 = ProductUtil.buildProductDto();
         ProductDto userDto2 = ProductUtil.buildProductDto();
 
@@ -178,7 +178,7 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
-    void testFindAllUser_whenEmptyUserList() throws Exception {
+    void testFindAllProduct_whenEmptyProductList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/products")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -191,7 +191,7 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
-    void testUpdateUser_201() throws Exception {
+    void testUpdateProduct_201() throws Exception {
         Product productSaved = productRepository.save(ProductUtil.buildProduct());
         ProductDto productUpdate = ProductUtil.buildProductDto();
 
@@ -208,7 +208,7 @@ public class ProductControllerIntegrationTest {
     @Test
     void testUpdateProduct_201_whenEmptyThreeField() throws Exception {
         Product productSaved = productRepository.save(ProductUtil.buildProduct());
-        ProductDto productUpdate = ProductUtil.buildProductUpdateDto();
+        ProductDto productUpdate = ProductUtil.buildProductUpdateDto(productSaved.getId());
         productUpdate.setName(null);
         productUpdate.setDescription(null);
         productUpdate.setLeftInStock(null);
@@ -227,7 +227,7 @@ public class ProductControllerIntegrationTest {
     @Test
     void testUpdateProduct_400_EmptyAllField() throws Exception {
         Product productSaved = productRepository.save(ProductUtil.buildProduct());
-        ProductDto productUpdate = ProductUtil.buildProductUpdateDto();
+        ProductDto productUpdate = ProductUtil.buildProductUpdateDto(productSaved.getId());
         productUpdate.setName(null);
         productUpdate.setDescription(null);
         productUpdate.setLeftInStock(null);
@@ -245,7 +245,7 @@ public class ProductControllerIntegrationTest {
     @Test
     void testUpdateProduct_415() throws Exception {
         Product productSaved = productRepository.save(ProductUtil.buildProduct());
-        ProductDto productUpdate = ProductUtil.buildProductUpdateDto();
+        ProductDto productUpdate = ProductUtil.buildProductUpdateDto(productSaved.getId());
         productUpdate.setName("Iphone 17 pro mac");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/products/{id}", productSaved.getId())
@@ -258,7 +258,7 @@ public class ProductControllerIntegrationTest {
     @Test
     void testUpdateProduct_whenNotFoundProductId() throws Exception {
         Long productId = 999L;
-        ProductDto productUpdate = ProductUtil.buildProductUpdateDto();
+        ProductDto productUpdate = ProductUtil.buildProductUpdateDto(productId);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/products/{id}", productId)
                         .contentType(MediaType.APPLICATION_JSON)

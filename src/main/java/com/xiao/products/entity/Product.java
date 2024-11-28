@@ -39,7 +39,7 @@ public class Product extends BaseEntity{
     private Set<ProductImage> productImages;
 
     @ManyToOne
-    @JoinColumn(name = "branch_id", nullable = false)
+    @JoinColumn(name = "branch_id")
     private Branch branch;
 
 }

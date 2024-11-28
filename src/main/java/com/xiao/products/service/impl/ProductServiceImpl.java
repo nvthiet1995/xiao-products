@@ -11,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -35,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto findProductById(Long id) {
+        List<Product> productTest = productRepository.findAll();
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Product", "id", String.valueOf(id))
         );

@@ -10,7 +10,6 @@ public class ProductUtil {
     public static ProductDto buildProductDto(){
         Map<String, String> specifications = new HashMap<>();
         return ProductDto.builder()
-                .id(1L)
                 .name("Iphone 14 pro max")
                 .leftInStock(20)
                 .description("Phone is supper vip")
@@ -23,7 +22,6 @@ public class ProductUtil {
 
     public static Product buildProduct(){
         return Product.builder()
-                .id(1L)
                 .name("Iphone 14 pro max")
                 .leftInStock(20)
                 .description("Phone is supper vip")
@@ -34,9 +32,9 @@ public class ProductUtil {
                 .build();
     }
 
-    public static ProductDto buildProductUpdateDto(){
+    public static ProductDto buildProductUpdateDto(Long id){
         return ProductDto.builder()
-                .id(1L)
+                .id(id)
                 .name("Iphone 14 pro maxxxx")
                 .leftInStock(15)
                 .description("Phone is supper vip pro")
