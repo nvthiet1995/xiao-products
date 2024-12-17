@@ -10,7 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -39,7 +42,11 @@ class ProductControllerIntegrationTest {
         productRepository.deleteAll();
     }
 
+    @MockBean
+    private JwtDecoder jwtDecoder;
+
     @Test
+    @WithMockUser
     void testCreateProduct_201() throws Exception {
         ProductDto productDto = ProductUtil.buildProductDto();
 
@@ -53,6 +60,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testCreateProduct_400() throws Exception {
         ProductDto productDto = ProductUtil.buildProductDto();
         productDto.setName(null);
@@ -68,6 +76,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testCreateProduct_415() throws Exception {
         ProductDto productDto = ProductUtil.buildProductDto();
 
@@ -79,6 +88,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testFindProductById_200() throws Exception {
         ProductDto productDto = ProductUtil.buildProductDto();
 
@@ -91,6 +101,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testFindProductById_404() throws Exception {
         Long productId = 999L;
 
@@ -103,6 +114,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testFindAllProduct_200() throws Exception {
         ProductDto productDto = ProductUtil.buildProductDto();
         ProductDto productDto1 = ProductUtil.buildProductDto();
@@ -127,6 +139,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testFindAllProduct_200_withPageSizeIs1() throws Exception {
 
         Product productPage1 = productRepository.save(ProductUtil.buildProduct());
@@ -156,6 +169,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testFindAllProduct_whenMissingParams() throws Exception {
         ProductDto userDto1 = ProductUtil.buildProductDto();
         ProductDto userDto2 = ProductUtil.buildProductDto();
@@ -178,6 +192,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testFindAllProduct_whenEmptyProductList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/products")
                         .accept(MediaType.APPLICATION_JSON))
@@ -191,6 +206,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testUpdateProduct_201() throws Exception {
         Product productSaved = productRepository.save(ProductUtil.buildProduct());
         ProductDto productUpdate = ProductUtil.buildProductDto();
@@ -206,6 +222,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testUpdateProduct_201_whenEmptyThreeField() throws Exception {
         Product productSaved = productRepository.save(ProductUtil.buildProduct());
         ProductDto productUpdate = ProductUtil.buildProductUpdateDto(productSaved.getId());
@@ -225,6 +242,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testUpdateProduct_400_EmptyAllField() throws Exception {
         Product productSaved = productRepository.save(ProductUtil.buildProduct());
         ProductDto productUpdate = ProductUtil.buildProductUpdateDto(productSaved.getId());
@@ -243,6 +261,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testUpdateProduct_415() throws Exception {
         Product productSaved = productRepository.save(ProductUtil.buildProduct());
         ProductDto productUpdate = ProductUtil.buildProductUpdateDto(productSaved.getId());
@@ -256,6 +275,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testUpdateProduct_whenNotFoundProductId() throws Exception {
         Long productId = 999L;
         ProductDto productUpdate = ProductUtil.buildProductUpdateDto(productId);
@@ -271,6 +291,7 @@ class ProductControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void testDeleteProduct_200() throws Exception {
         Product product = ProductUtil.buildProduct();
         productRepository.save(product);
@@ -281,6 +302,7 @@ class ProductControllerIntegrationTest {
                 .andExpect(status().isOk());
     }
     @Test
+    @WithMockUser
     void testDeleteProduct_whenNotFoundProductId() throws Exception {
         Product product = ProductUtil.buildProduct();
         productRepository.save(product);
